@@ -105,18 +105,25 @@ def get_tradier_data():
             y = y0 + (x - x0) * ((y1 - y0) / (x1 - x0))
             midpoint.insert(i + 1, y)
 
+            # Linear Interpolation Delta
+
             # Add Strikes
             strikes.insert(i + 1, strikes[i] + 1)
 
-    # fig, (ax1, ax2) = plt.subplots(2)
-    # fig.suptitle("Market Data")
+    fig, (ax1) = plt.subplots(1)
 
-    # ax1.plot(strikes, ivol)
-    # ax1.set_title("Implied Volatility")
+    ax1.plot(strikes, ivol)
+    ax1.set_xlabel("Strikes")
+    ax1.set_ylabel("Implied Volatility")
+    ax1.set_title("Volatility Surface")
 
-    # ax2.plot(strikes, midpoint)
-    # ax2.set_title("Midpoint Price")
+    fig, (ax1) = plt.subplots(1)
 
-    # plt.show()
+    ax1.plot(strikes, midpoint)
+    ax1.set_xlabel("Strikes")
+    ax1.set_ylabel("Midpoint Price")
+    ax1.set_title("Fair Market Price")
+
+    plt.show()
 
     return np.array(midpoint), np.array(ivol), strikes

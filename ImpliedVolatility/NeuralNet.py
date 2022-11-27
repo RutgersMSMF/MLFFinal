@@ -42,31 +42,41 @@ def get_neural_network():
     model.add(Dense(2, activation = 'sigmoid', name = 'Hidden-Layer'))
     
     # Output Layer
-    model.add(Dense(1, activation = 'tanh', name = 'Output-Layer'))
+    model.add(Dense(1, activation = 'sigmoid', name = 'Output-Layer'))
 
+    # print("Training Network")
+    # learning_rate = np.linspace(0.0001, 1, 100)
+    # epoch_count = 50
+    # MSE_TRAIN = []
+    # MSE_TEST = []
+
+    # for l in learning_rate:
+
+    #     sgd = SGD(learning_rate = l)
+    #     # adam = Adam(learning_rate = l)
+    #     model.compile(loss = "mean_squared_error", optimizer = sgd, metrics = ["mean_squared_error"])
+    #     H = model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = epoch_count, batch_size = 128)
+    #     MSE_TRAIN.append(sum(H.history["mean_squared_error"]))
+    #     MSE_TEST.append(sum(H.history["val_mean_squared_error"]))
+
+    # fig, (ax1) = plt.subplots(1)
+
+    # ax1.plot(learning_rate, MSE_TRAIN, label = "Train MSE")
+    # ax1.plot(learning_rate, MSE_TEST, label = "Test MSE")
+    # ax1.set_title("Optimal Learning Rate")
+    # ax1.legend(loc = "best")
+
+    # plt.show()
+
+    # Optimal Learning Rate
     print("Training Network")
     learning_rate = np.linspace(0.0001, 1, 100)
     epoch_count = 50
-    MSE_TRAIN = []
-    MSE_TEST = []
-
-    for l in learning_rate:
-
-        # sgd = SGD(learning_rate = l)
-        adam = Adam(learning_rate = l)
-        model.compile(loss = "mean_squared_error", optimizer = adam, metrics = ["mean_squared_error"])
-        H = model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = epoch_count, batch_size = 128)
-        MSE_TRAIN.append(sum(H.history["mean_squared_error"]))
-        MSE_TEST.append(sum(H.history["val_mean_squared_error"]))
-
-    fig, (ax1, ax2) = plt.subplots(2, 1)
-
-    ax1.plot(learning_rate)
-
-    ax2.plot(MSE_TRAIN)
-    ax2.plot(MSE_TEST)
-
-    plt.show()
+    l_best = learning_rate[20]
+    sgd = SGD(learning_rate = l_best)
+    # adam = Adam(learning_rate = l_best)
+    model.compile(loss = "mean_squared_error", optimizer = sgd, metrics = ["mean_squared_error"])
+    H = model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = epoch_count, batch_size = 128)
 
     # evaluate the network
     print("Evaluating Network")
@@ -90,6 +100,10 @@ def get_neural_network():
     ax3.plot(y_test, label = "Test Set")
     ax3.set_title("Volatility Predictions")
     ax3.legend(loc = "best")
+
+    ax4.plot(y_test - predictions, label = "Market - Prediction")
+    ax4.set_title("Volatility Residuals")
+    ax4.legend(loc = "best")
 
     plt.show()
 
