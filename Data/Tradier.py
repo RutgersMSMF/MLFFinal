@@ -90,7 +90,6 @@ def get_tradier_data():
     min_elem = np.min(strikes)
     interval = 0.05
     elem_set = int((max_elem - min_elem) / interval) 
-    print(elem_set)
 
     for i in range(elem_set): 
 
@@ -165,21 +164,21 @@ def get_tradier_data():
         filtered_midpoint.append(filtered_midpoint_temp)
         filtered_ivol.append(filtered_ivol_temp)
 
-    # fig, (ax1) = plt.subplots(1)
+        # fig, (ax1) = plt.subplots(1)
 
-    # ax1.plot(filtered_strikes, filtered_ivol)
-    # ax1.set_xlabel("Strikes")
-    # ax1.set_ylabel("Implied Volatility")
-    # ax1.set_title("Volatility Surface")
+        # ax1.plot(filtered_strikes[i], filtered_ivol[i])
+        # ax1.set_xlabel("Strikes")
+        # ax1.set_ylabel("Implied Volatility")
+        # ax1.set_title("Volatility Surface")
 
-    # fig, (ax1) = plt.subplots(1)
+        # fig, (ax1) = plt.subplots(1)
 
-    # ax1.plot(filtered_strikes, filtered_midpoint)
-    # ax1.set_xlabel("Strikes")
-    # ax1.set_ylabel("Midpoint Price")
-    # ax1.set_title("Fair Market Price")
+        # ax1.plot(filtered_strikes[i], filtered_midpoint[i])
+        # ax1.set_xlabel("Strikes")
+        # ax1.set_ylabel("Midpoint Price")
+        # ax1.set_title("Fair Market Price")
 
-    # plt.show()
+        # plt.show()
 
     return filtered_midpoint, filtered_ivol, filtered_strikes
 
