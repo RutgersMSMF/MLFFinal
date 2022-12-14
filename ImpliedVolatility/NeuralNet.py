@@ -98,7 +98,7 @@ def get_neural_network(noise = True, noise_level = 0.000001):
         model.add(Input(shape = (1, ), name = 'Input-Layer'))
 
         # Hidden Layer 
-        model.add(Dense(2, activation = 'swish', name = 'Hidden-Layer'))
+        model.add(Dense(2, activation = 'sigmoid', name = 'Hidden-Layer'))
         
         # Output Layer
         model.add(Dense(1, activation = 'sigmoid', name = 'Output-Layer'))
@@ -113,7 +113,7 @@ def get_neural_network(noise = True, noise_level = 0.000001):
 
         #     sgd = SGD(learning_rate = l)
         #     model.compile(loss = "mean_squared_error", optimizer = sgd, metrics = ["mean_squared_error"])
-        #     H = model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = epoch_count, batch_size = 64)
+        #     H = model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = epoch_count, batch_size = 32)
         #     MSE_TRAIN.append(sum(H.history["mean_squared_error"]))
         #     MSE_TEST.append(sum(H.history["val_mean_squared_error"]))
 
@@ -133,11 +133,11 @@ def get_neural_network(noise = True, noise_level = 0.000001):
         l_best = learning_rate[20]
         sgd = SGD(learning_rate = l_best)
         model.compile(loss = "mean_squared_error", optimizer = sgd, metrics = ["mean_absolute_percentage_error"])
-        H = model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = epoch_count, batch_size = 64)
+        H = model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = epoch_count, batch_size = 32)
 
         # evaluate the network
         print("Evaluating Network")
-        predictions = model.predict(X_test, batch_size = 64)
+        predictions = model.predict(X_test, batch_size = 32)
 
         # market_price = []
         # predicted_price = []
@@ -158,7 +158,7 @@ def get_neural_network(noise = True, noise_level = 0.000001):
         ax1.legend(loc = "best")
 
         ax2.plot(interval, H.history["mean_absolute_percentage_error"], label = "Train MAPE")
-        ax2.plot(interval, H.history["mean_absolute_percentage_error"], label = "Test MAPE")
+        ax2.plot(interval, H.history["val_mean_absolute_percentage_error"], label = "Test MAPE")
         ax2.set_title("Mean Absolute Percentage Error")
         ax2.legend(loc = "best")
 
